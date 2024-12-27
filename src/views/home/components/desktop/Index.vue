@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mx-4 my-6 md:mx-8 md:my-8 relative h-[calc(100vh-6.5rem)] flex flex-col gap-10 parent z-10"
+    class="mx-4 my-6 md:mx-8 md:my-8 relative h-[calc(100dvh-6.5rem)] flex flex-col gap-10 parent z-10"
   >
     <button
       class="w-28"

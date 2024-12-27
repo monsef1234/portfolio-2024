@@ -26,7 +26,7 @@
     class="content font-lucida py-4 px-2 tracking-tighter lowercase h-[calc(100%-2.5rem)] overflow-auto"
     ref="content"
   >
-    <div v-for="(line, index) in outputLines" :key="index" class="mt-2">
+    <div v-for="(line, index) in outputLines" :key="index" class="mt-1">
       <p class="prompt grid grid-cols-[auto_1fr] gap-1">
         <span class="w-52 inline-block">C:&#92;Monsef's Portfolio&#92;></span>
         <span class="inline-block wrap font-bold">{{ line.prompt }}</span>
@@ -37,17 +37,18 @@
       <div v-else class="my-2 break-words" v-html="line.message"></div>
     </div>
 
-    <div class="grid grid-cols-[auto_1fr] gap-1 mt-2">
+    <div class="grid grid-cols-[auto_1fr] gap-1 mt-1">
       <p class="w-52">C:&#92;Monsef's Portfolio&#92;></p>
       <input
-        class="bg-transparent border-none outline-none w-full"
+        class="bg-transparent border-none outline-none w-full placeholder:text-[var(--color-5)] placeholder:opacity-50"
         ref="commandInput"
         type="text"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
+        :placeholder="checkPlaceholder ? `Enter a command` : ``"
         v-model="command"
-        @blur="handleFocus"
+        @blur="!checkDevices && handleFocus()"
         @keydown.enter="commandHandler"
       />
     </div>
@@ -116,6 +117,8 @@ export default defineComponent({
   methods: {
     commandHandler() {
       if (!this.command.trim()) return;
+      if (this.checkDevices && this.$refs.commandInput)
+        (this.$refs.commandInput as HTMLInputElement)?.blur();
 
       this.history.push(this.command.toLowerCase());
       this.historyIndex = -1;
@@ -220,11 +223,11 @@ export default defineComponent({
           <p>- Download my resume</p>
         </div>
         <div class="flex gap-2">
-          <em class="font-bold w-24">history</em> 
+          <em class="font-bold w-24">history</em>
           <p>- View the command history</p>
         </div>
         <div class="flex gap-2">
-          <em class="font-bold w-24">clear</em> 
+          <em class="font-bold w-24">clear</em>
           <p>- Clear the terminal</p>
         </div>
         </div>`;
@@ -245,7 +248,9 @@ export default defineComponent({
 
     handleFocus() {
       if (this.commandInput) {
-        this.$nextTick(() => this.commandInput?.focus());
+        this.$nextTick(() => {
+          this.commandInput?.focus();
+        });
       }
     },
 
@@ -359,8 +364,20 @@ export default defineComponent({
     },
   },
 
+  computed: {
+    checkDevices() {
+      return window.matchMedia("(max-width: 768px)").matches;
+    },
+
+    checkPlaceholder() {
+      if (!this.checkDevices || this.outputLines.length > 1) return false;
+
+      return true;
+    },
+  },
+
   mounted() {
-    this.handleFocus();
+    !this.checkDevices && this.handleFocus();
     this.navigateUsingArrowKeys();
     this.completeWithTab();
   },

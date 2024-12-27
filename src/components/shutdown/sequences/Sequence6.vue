@@ -38,7 +38,7 @@
       }"
       >here</span
     >
-    to restart computer at the end it not going to shutdown 🤭</small
+    to restart me, at the end im not going to shutdown 🤭</small
   >
 
   <div v-if="list">

@@ -1,10 +1,6 @@
 <template>
-  <p class="text-lg leading-9">
-    Initiating shutdown sequence... Wrapping up all processes and securing data
-    streams. Memory banks powering down, cache cleared, background tasks
-    completed. It's been a productive session! Systems powering off - catch you
-    on the next boot! 💫 <span class="blink" v-if="cursor">_</span>
-  </p>
+  <span class="blink" v-if="cursor">_</span>
+  <div id="shutdown"></div>
   <div id="error"></div>
   <div class="error-messages"></div>
   <div id="restart"></div>
@@ -89,16 +85,40 @@ export default defineComponent({
       });
     },
 
+    shutdownTypewriter() {
+      const typewriter = this.initializeTypewriter("#shutdown");
+
+      typewriter
+        .pauseFor(2000)
+        .callFunction(() => {
+          this.cursor = false;
+        })
+        .typeString("<p class='text-lg'>Initiating shutdown sequence...</p>")
+        .pauseFor(500)
+        .typeString(
+          "<p class='text-lg'>Wrapping up all processes and securing data streams.</p>"
+        )
+        .pauseFor(500)
+        .typeString(
+          "<p class='text-lg'> Memory banks powering down, cache cleared,</p>"
+        )
+        .pauseFor(500)
+        .typeString(
+          "<p class='text-lg'>It's been a productive session! Systems powering off - catch you on the next boot!</p>"
+        )
+        .pauseFor(3000)
+        .callFunction(() => {
+          this.errorTypewriter();
+        })
+        .start();
+    },
+
     errorTypewriter() {
       const typewriter = this.initializeTypewriter("#error");
 
       typewriter
-        .pauseFor(4000)
-        .callFunction(() => {
-          this.cursor = false;
-        })
         .typeString(
-          "<p class='text-red-500 font-bold mt-5 mb-5 text-xl'>CRITICAL_SYSTEM_FAILURE_DETECTED</p>"
+          "<p class='text-red-500 font-bold mt-2 mb-2 text-lg md:text-xl'>CRITICAL_SYSTEM_FAILURE_DETECTED</p>"
         )
         .pauseFor(2000)
         .callFunction(async () => {
@@ -147,7 +167,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.errorTypewriter();
+    this.shutdownTypewriter();
   },
 });
 </script>

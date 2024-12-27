@@ -1,6 +1,6 @@
 <template>
   <div
-    class="font-lucida bg-[var(--color-2)] h-screen p-6 sm:p-10 md:p-20 break-words overflow-auto"
+    class="font-lucida bg-[var(--color-2)] h-[100dvh] p-6 sm:p-10 md:p-20 break-words overflow-auto"
     id="scroll-container"
   >
     <Sequence1 v-if="sequencesStore.sequence === 1" />

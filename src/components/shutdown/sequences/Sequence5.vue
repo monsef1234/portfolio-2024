@@ -93,9 +93,7 @@ export default defineComponent({
       .pauseFor(1000)
       .typeString("<p class='text-lg mb-4'>ughh i admit it you win</p>")
       .pauseFor(500)
-      .typeString(
-        "<p class='text-lg mb-4'>this computer will shutdown after 5 seconds</p>"
-      )
+      .typeString("<p class='text-lg mb-4'>i will shutdown after 5 seconds</p>")
       .pauseFor(500)
       .typeString("<p>1</p>")
       .pauseFor(1500)

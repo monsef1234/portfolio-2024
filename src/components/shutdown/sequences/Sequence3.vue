@@ -54,7 +54,7 @@ export default defineComponent({
       )
       .pauseFor(500)
       .typeString(
-        "<p class='text-lg mb-4 leading-9'>You <strong class='text-red-500'>CAN NOT</strong> shutdown this computer</p>"
+        "<p class='text-lg mb-4 leading-9'>You <strong class='text-red-500'>CAN NOT</strong> shutdown me</p>"
       )
       .pauseFor(500)
       .typeString(

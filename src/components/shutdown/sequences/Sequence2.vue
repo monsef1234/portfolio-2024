@@ -50,7 +50,7 @@ export default defineComponent({
       })
       .pauseFor(1000)
       .typeString(
-        "<p class='text-lg mb-4 leading-9'>You can not shutdown my amazing computer right now there are some issues, go discover it more or play some game i create until i correct the issue</p>"
+        "<p class='text-lg mb-4 leading-9'>You can not shutdown me right now there are some issues, go discover it more or play some game i create until i correct the issue</p>"
       )
       .pauseFor(500)
       .typeString("<span class='text-lg font-bold'>Restarting</span>")

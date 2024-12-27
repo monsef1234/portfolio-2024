@@ -73,52 +73,33 @@
   </div>
 
   <div
-    class="arrows flex flex-col items-center gap-2 justify-center mt-5"
+    class="arrows flex flex-col items-center gap-3 justify-center mt-3"
     v-if="checkDevices"
   >
     <kbd
-      @click="
-        () => {
-          command = 'up';
-          moveSnake();
-        }
-      "
+      @click="handleTouch('up')"
       class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
     >
-      <SvgIcon :path="mdiChevronUp" type="mdi" :size="24" />
+      <SvgIcon :path="mdiChevronUp" type="mdi" :size="30" />
     </kbd>
-    <div class="flex gap-2 items-center">
+    <div class="flex gap-3 items-center">
       <kbd
-        @click="
-          () => {
-            command = 'left';
-            moveSnake();
-          }
-        "
+        @click="handleTouch('left')"
         class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
       >
-        <SvgIcon :path="mdiChevronLeft" type="mdi" :size="24" />
+        <SvgIcon :path="mdiChevronLeft" type="mdi" :size="30" />
       </kbd>
       <kbd
-        @click="
-          () => {
-            command = 'down';
-          }
-        "
+        @click="handleTouch('down')"
         class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
       >
-        <SvgIcon :path="mdiChevronDown" type="mdi" :size="24" />
+        <SvgIcon :path="mdiChevronDown" type="mdi" :size="30" />
       </kbd>
       <kbd
-        @click="
-          () => {
-            command = 'right';
-            moveSnake();
-          }
-        "
+        @click="handleTouch('right')"
         class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
       >
-        <SvgIcon :path="mdiChevronRight" type="mdi" :size="24" />
+        <SvgIcon :path="mdiChevronRight" type="mdi" :size="30" />
       </kbd>
     </div>
   </div>
@@ -141,6 +122,7 @@ import { useMotions } from "@vueuse/motion";
 import { App } from "@/types/app";
 import eatEffect from "@/assets/sounds/eat-effect.wav";
 import gameOverEffect from "@/assets/sounds/game-over.wav";
+import { comma } from "postcss/lib/list";
 
 type command = "left" | "right" | "up" | "down";
 
@@ -354,6 +336,19 @@ export default defineComponent({
       setInterval(() => {
         this.moveSnake();
       }, 200);
+    },
+
+    handleTouch(command: command) {
+      if (
+        (command === "left" && this.command === "right") ||
+        (command === "right" && this.command === "left") ||
+        (command === "up" && this.command === "down") ||
+        (command === "down" && this.command === "up")
+      )
+        return;
+
+      this.command = command;
+      this.moveSnake();
     },
 
     handleKeyDown(e: KeyboardEvent) {

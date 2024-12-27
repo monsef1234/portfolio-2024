@@ -12,7 +12,7 @@
     />
   </transition>
 
-  <div class="h-screen flex flex-col" v-if="!shutdown && !preloader">
+  <div class="h-[100dvh] flex flex-col" v-if="!shutdown && !preloader">
     <div class="flex-1 bg-[#1b2021]">
       <Desktop />
     </div>
@@ -55,7 +55,7 @@ export default defineComponent({
 
   data() {
     return {
-      preloader: true as boolean,
+      preloader: false as boolean,
       shutdown: false as boolean,
     };
   },
