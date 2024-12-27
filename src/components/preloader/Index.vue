@@ -4,7 +4,7 @@
     id="scroll-container"
   >
     <div class="flex text-center gap-32 text-lg leading-5 px-5">
-      <p class="font-bold">Monsef,<br />Sofiane,<br />Bouras</p>
+      <p class="font-bold">Moncef,<br />Sofiane,<br />Bouras</p>
       <p>Released on: {{ format(new Date("2024-12-16"), "dd/MM/yyyy") }}</p>
     </div>
 
