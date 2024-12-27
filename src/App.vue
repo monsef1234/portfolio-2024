@@ -57,14 +57,14 @@ export default defineComponent({
     // },
 
     async visitorHandler() {
-      this.visitorsStore.setLoading(true);
+      // this.visitorsStore.setLoading(true);
       try {
         const isVisited = localStorage.getItem("isVisited");
         const query = `count(*[_type == "visitor"])`;
 
         if (isVisited) {
           const visitorsCount = await sanityClient.fetch(query);
-          this.visitorsStore.setVisitorsCount(visitorsCount);
+          // this.visitorsStore.setVisitorsCount(visitorsCount);
           return;
         }
 
@@ -79,7 +79,7 @@ export default defineComponent({
 
         const visitorsCount = await sanityClient.fetch(query);
 
-        this.visitorsStore.setVisitorsCount(visitorsCount);
+        // this.visitorsStore.setVisitorsCount(visitorsCount);
         localStorage.setItem("isVisited", "true");
       } catch (error) {
         console.log(error);
