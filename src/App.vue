@@ -44,12 +44,12 @@ export default defineComponent({
   //   };
   // },
 
-  data() {
-    return {
-      preloader: false as boolean,
-      shutdown: false as boolean,
-    };
-  },
+  // data() {
+  //   return {
+  //     preloader: false as boolean,
+  //     shutdown: false as boolean,
+  //   };
+  // },
 
   methods: {
     // motions() {
@@ -117,10 +117,10 @@ export default defineComponent({
     // );
 
     emitter.on("shutdown", () => {
-      this.shutdown = true;
+      // this.shutdown = true;
     });
     emitter.on("restart", () => {
-      this.shutdown = false;
+      // this.shutdown = false;
     });
   },
 
