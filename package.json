@@ -1,8 +1,9 @@
 {
-  "name": "frontend",
+  "name": "portfolio-2024",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Professional portfolio of [Your Name], showcasing frontend development projects using Vue.js, and modern web technologies.",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
@@ -22,7 +23,6 @@
     "tiny-emitter": "^2.1.0",
     "typewriter-effect": "^2.21.0",
     "vue": "^3.5.13",
-    "vue-confetti-explosion": "^1.0.2",
     "vue-draggable-resizable": "^3.0.0",
     "vue-router": "^4.5.0",
     "vue-simple-context-menu": "^4.1.0"
