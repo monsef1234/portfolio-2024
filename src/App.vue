@@ -19,7 +19,7 @@
   <!-- <Shutdown v-if="shutdown && !preloader" /> -->
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from "vue";
 
 import { useMotions } from "@vueuse/motion";
@@ -129,4 +129,4 @@ export default defineComponent({
     // emitter.off("restart");
   },
 });
-</script>
+</script> -->
