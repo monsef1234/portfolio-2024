@@ -22,8 +22,8 @@ import { defineComponent } from "vue";
 
 // import { useMotions } from "@vueuse/motion";
 
-import Preloader from "@/components/preloader/Index.vue";
-import Shutdown from "@/components/shutdown/Index.vue";
+// import Preloader from "@/components/preloader/Index.vue";
+// import Shutdown from "@/components/shutdown/Index.vue";
 // import { useVisitorsStore } from "./stores/visitors";
 import { emitter } from "./main";
 // import { sanityClient } from "./sanity";
@@ -31,10 +31,10 @@ import { emitter } from "./main";
 export default defineComponent({
   name: "App",
 
-  components: {
-    Preloader,
-    Shutdown,
-  },
+  // components: {
+  //   Preloader,
+  //   Shutdown,
+  // },
 
   // setup() {
   //   const visitorsStore = useVisitorsStore();
