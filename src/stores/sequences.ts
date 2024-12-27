@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useSequencesStore = defineStore("sequences", {
   state: () => ({
-    sequence: 6 as number,
+    sequence: 1 as number,
   }),
 
   actions: {

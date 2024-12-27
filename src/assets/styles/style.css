@@ -37,6 +37,11 @@ body {
   -moz-user-select: none;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-3) black;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }

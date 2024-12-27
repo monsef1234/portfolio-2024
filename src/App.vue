@@ -46,8 +46,8 @@ export default defineComponent({
 
   data() {
     return {
-      preloader: false as boolean,
-      shutdown: true as boolean,
+      preloader: true as boolean,
+      shutdown: false as boolean,
     };
   },
 
@@ -109,12 +109,12 @@ export default defineComponent({
       }
     });
 
-    // Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
-    //   () => {
-    //     this.preloader = false;
-    //     this.visitorsStore.setLoading(false);
-    //   }
-    // );
+    Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
+      () => {
+        this.preloader = false;
+        this.visitorsStore.setLoading(false);
+      }
+    );
 
     emitter.on("shutdown", () => {
       this.shutdown = true;

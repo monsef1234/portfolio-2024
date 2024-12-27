@@ -1,13 +1,20 @@
 <template>
   <div
-    class="font-lucida my-10 flex flex-col gap-20 h-[calc(100vh-5rem)] absolute container mx-5"
+    class="font-lucida h-full py-10 flex flex-col gap-12 md:gap-20 absolute container break-words overflow-auto"
+    id="scroll-container"
   >
-    <div class="flex text-center gap-32 text-lg leading-5">
+    <div class="flex text-center gap-32 text-lg leading-5 px-5">
       <p class="font-bold">Monsef,<br />Sofiane,<br />Bouras</p>
       <p>Released on: {{ format(new Date("2024-12-16"), "dd/MM/yyyy") }}</p>
     </div>
 
-    <div class="flex-1 leading-5 text-lg">
+    <small class="block text-sm md:text-left px-5 text-center">
+      💡<strong class="text-[var(--color-4)]">Pro tip:</strong> For the best
+      viewing experience and full interactive features, visit this portfolio on
+      a desktop or laptop computer!
+    </small>
+
+    <div class="flex-1 leading-5 text-lg px-5">
       <div class="flex gap-[0.3rem] uppercase">
         <p>Loading resources</p>
         <div class="loader">
@@ -16,7 +23,7 @@
           <span></span>
         </div>
       </div>
-      <div class="ml-10 text-base mt-5">
+      <div class="text-base mt-5">
         <p
           v-for="resource in loadedResources"
           :key="resource"
@@ -25,7 +32,7 @@
       </div>
     </div>
 
-    <div class="text-lg leading-5">
+    <div class="text-lg leading-5 px-5">
       <p>
         Press <kbd class="font-bold">DEL</kbd> to enter setup,
         <kbd class="font-bold">ESC</kbd> to skip memory test
@@ -52,16 +59,15 @@ export default defineComponent({
   data() {
     return {
       resources: [
-        "Loading Graphics Interface... &nbsp;&nbsp;&nbsp;&nbsp;10%",
-        "Loading UI Elements... &nbsp;&nbsp;&nbsp;&nbsp;20%",
-        "Mounting File System...&nbsp;&nbsp;&nbsp;&nbsp;30%",
-        "Initializing Core Kernel...&nbsp;&nbsp;&nbsp;&nbsp;40%",
-        "Allocating Memory Resources...&nbsp;&nbsp;&nbsp;&nbsp;50%",
-        "Scanning for Updates...&nbsp;&nbsp;&nbsp;&nbsp;60%",
-        "Synchronizing System Clock...&nbsp;&nbsp;&nbsp;&nbsp;70%",
-        "Loading Fonts and Themes...&nbsp;&nbsp;&nbsp;&nbsp;80%",
-        "Cleaning Temporary Files...&nbsp;&nbsp;&nbsp;&nbsp;90%",
-        "Compiling Cache Data...&nbsp;&nbsp;&nbsp;&nbsp;100%",
+        "Loading UI Elements... &nbsp;&nbsp;&nbsp;20%",
+        "Mounting File System...&nbsp;&nbsp;&nbsp;30%",
+        "Initializing Core Kernel...&nbsp;&nbsp;&nbsp;40%",
+        "Allocating Memory Resources...&nbsp;&nbsp;&nbsp;50%",
+        "Scanning for Updates...&nbsp;&nbsp;&nbsp;60%",
+        "Synchronizing System Clock...&nbsp;&nbsp;&nbsp;70%",
+        "Loading Fonts and Themes...&nbsp;&nbsp;&nbsp;80%",
+        "Cleaning Temporary Files...&nbsp;&nbsp;&nbsp;90%",
+        "Compiling Cache Data...&nbsp;&nbsp;&nbsp;100%",
       ] as string[],
 
       progress: 0 as number,
@@ -82,18 +88,20 @@ export default defineComponent({
     },
 
     autoScroll() {
-      const target = document.querySelector(".container") as HTMLElement;
+      const container = document.querySelector(
+        "#scroll-container"
+      ) as HTMLElement;
 
-      if (!target) return;
+      if (!container) return;
 
       const observer = new MutationObserver(() => {
-        target.scrollTo({
-          top: target.scrollHeight,
+        container.scrollTo({
+          top: container.scrollHeight,
           behavior: "smooth",
         });
       });
 
-      observer.observe(target, {
+      observer.observe(container, {
         childList: true,
         subtree: true,
       });
@@ -110,6 +118,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#scroll-container {
+  scrollbar-width: none;
+}
+
 .loader span {
   display: inline-block;
   width: 3px;

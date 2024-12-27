@@ -138,10 +138,10 @@ export default defineComponent({
         .pauseFor(500)
         .typeString("<span>.</span>")
         .pauseFor(500)
-        // .callFunction(() => {
-        //   emitter.emit("restart");
-        //   this.sequencesStore.setSequence();
-        // })
+        .callFunction(() => {
+          emitter.emit("restart");
+          this.sequencesStore.setSequence();
+        })
         .start();
     },
   },

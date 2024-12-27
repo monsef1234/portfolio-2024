@@ -73,4 +73,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+#scroll-container {
+  scrollbar-width: none;
+}
+</style>

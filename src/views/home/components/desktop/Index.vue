@@ -130,7 +130,7 @@ import { emitter } from "@/main";
 import Terminal from "../terminal/Index.vue";
 import Snake from "../snake/Index.vue";
 import { openedApp } from "@/types/opened-app";
-// import TicTacToe from "../tictactoe/Index.vue";
+import TicTacToe from "../tictactoe/Index.vue";
 
 export default defineComponent({
   name: "Desktop",
@@ -149,7 +149,7 @@ export default defineComponent({
     SvgIcon,
     Snake,
     Terminal,
-    // TicTacToe,
+    TicTacToe,
   },
 
   data() {

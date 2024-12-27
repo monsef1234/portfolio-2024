@@ -2,7 +2,11 @@
   <span class="blink" v-if="cursor">_</span>
   <div id="content" v-show="!cursor"></div>
 
-  <form @submit.prevent="submit" class="flex flex-col gap-4 w-fit" v-if="form">
+  <form
+    @submit.prevent="submit"
+    class="flex flex-col gap-4 w-fit mb-4"
+    v-if="form"
+  >
     <input
       type="text"
       placeholder="enter your your name"
@@ -23,6 +27,19 @@
       submit
     </button>
   </form>
+
+  <small class="mb-4 block text-sm" v-if="form || list"
+    ><strong class="font-bold text-[var(--color-4)]">Note: </strong>click
+    <span
+      class="underline cursor-pointer"
+      @click="restartHandler"
+      :class="{
+        'opacity-50 pointer-events-none': loading,
+      }"
+      >here</span
+    >
+    to restart computer at the end it not going to shutdown 🤭</small
+  >
 
   <div v-if="list">
     <h1 class="text-xl underline mb-4">List of Warriors</h1>
@@ -176,6 +193,12 @@ export default defineComponent({
         startVelocity: 45,
       });
     },
+
+    restartHandler() {
+      emitter.emit("restart");
+
+      this.sequencesStore.resetSequence();
+    },
   },
 
   mounted() {
@@ -193,7 +216,7 @@ export default defineComponent({
       )
       .pauseFor(500)
       .typeString(
-        "<p class='text-lg mb-4'>as a reward we will put your name in the list of warriors</p>"
+        "<p class='text-lg'>as a reward we will put your name in the list of warriors</p>"
       )
       .pauseFor(500)
       .callFunction(() => {
