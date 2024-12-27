@@ -14,7 +14,7 @@
 
   <router-view />
 
-  <Shutdown v-if="shutdown && !preloader" />
+  <!-- <Shutdown v-if="shutdown && !preloader" /> -->
 </template>
 
 <script lang="ts">
