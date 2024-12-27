@@ -24,9 +24,9 @@ import { defineComponent } from "vue";
 
 import Preloader from "@/components/preloader/Index.vue";
 import Shutdown from "@/components/shutdown/Index.vue";
-import { useVisitorsStore } from "./stores/visitors";
+// import { useVisitorsStore } from "./stores/visitors";
 import { emitter } from "./main";
-import { sanityClient } from "./sanity";
+// import { sanityClient } from "./sanity";
 
 export default defineComponent({
   name: "App",
@@ -56,35 +56,35 @@ export default defineComponent({
     //   return useMotions();
     // },
 
-    async visitorHandler() {
-      // this.visitorsStore.setLoading(true);
-      try {
-        const isVisited = localStorage.getItem("isVisited");
-        const query = `count(*[_type == "visitor"])`;
+    // async visitorHandler() {
+    //   // this.visitorsStore.setLoading(true);
+    //   try {
+    //     const isVisited = localStorage.getItem("isVisited");
+    //     const query = `count(*[_type == "visitor"])`;
 
-        if (isVisited) {
-          const visitorsCount = await sanityClient.fetch(query);
-          // this.visitorsStore.setVisitorsCount(visitorsCount);
-          return;
-        }
+    //     if (isVisited) {
+    //       const visitorsCount = await sanityClient.fetch(query);
+    //       // this.visitorsStore.setVisitorsCount(visitorsCount);
+    //       return;
+    //     }
 
-        const data: { country_name: string; city: string } =
-          await this.getVisitorLocation();
+    //     const data: { country_name: string; city: string } =
+    //       await this.getVisitorLocation();
 
-        await sanityClient.create({
-          _type: "visitor",
-          country_name: data.country_name,
-          city: data.city,
-        });
+    //     await sanityClient.create({
+    //       _type: "visitor",
+    //       country_name: data.country_name,
+    //       city: data.city,
+    //     });
 
-        const visitorsCount = await sanityClient.fetch(query);
+    //     const visitorsCount = await sanityClient.fetch(query);
 
-        // this.visitorsStore.setVisitorsCount(visitorsCount);
-        localStorage.setItem("isVisited", "true");
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    //     // this.visitorsStore.setVisitorsCount(visitorsCount);
+    //     localStorage.setItem("isVisited", "true");
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
 
     async getVisitorLocation() {
       const response = await fetch(
@@ -101,13 +101,13 @@ export default defineComponent({
 
   mounted() {
     const minDisplayTime = new Promise((resolve) => setTimeout(resolve, 3500));
-    // const loadComplete = new Promise((resolve: any) => {
-    //   if (document.readyState === "complete") {
-    //     resolve();
-    //   } else {
-    //     window.addEventListener("load", resolve);
-    //   }
-    // });
+    const loadComplete = new Promise((resolve: any) => {
+      if (document.readyState === "complete") {
+        resolve();
+      } else {
+        window.addEventListener("load", resolve);
+      }
+    });
 
     // Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
     //   () => {
