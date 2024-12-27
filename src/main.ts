@@ -1,8 +1,8 @@
 // Core imports
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import App from "./App.vue";
 import router from "./router";
+import App from "./App.vue";
 
 // Plugins
 import { MotionPlugin } from "@vueuse/motion";
@@ -20,8 +20,8 @@ import "./assets/styles/style.css";
 export const emitter = new TinyEmitter();
 
 // App initialization
-const app = createApp(App);
 const pinia = createPinia();
+const app = createApp(App);
 
 // Global components
 app.component("vue-simple-context-menu", VueSimpleContextMenu);
