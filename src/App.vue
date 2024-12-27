@@ -12,23 +12,21 @@
     />
   </transition> -->
 
-  <!-- <router-view v-if="!preloader && !shutdown" /> -->
+  <router-view v-if="!preloader && !shutdown" />
 
-  <router-view />
-
-  <!-- <Shutdown v-if="shutdown && !preloader" /> -->
+  <Shutdown v-if="shutdown && !preloader" />
 </template>
 
-<!-- <script lang="ts">
+<script lang="ts">
 import { defineComponent } from "vue";
 
-import { useMotions } from "@vueuse/motion";
+// import { useMotions } from "@vueuse/motion";
 
 import Preloader from "@/components/preloader/Index.vue";
 import Shutdown from "@/components/shutdown/Index.vue";
 import { useVisitorsStore } from "./stores/visitors";
-// import { emitter } from "./main";
-// import { sanityClient } from "./sanity";
+import { emitter } from "./main";
+import { sanityClient } from "./sanity";
 
 export default defineComponent({
   name: "App",
@@ -48,45 +46,45 @@ export default defineComponent({
 
   data() {
     return {
-      preloader: true as boolean,
+      preloader: false as boolean,
       shutdown: false as boolean,
     };
   },
 
   methods: {
-    motions() {
-      return useMotions();
-    },
-
-    // async visitorHandler() {
-    //   this.visitorsStore.setLoading(true);
-    //   try {
-    //     const isVisited = localStorage.getItem("isVisited");
-    //     const query = `count(*[_type == "visitor"])`;
-
-    //     if (isVisited) {
-    //       const visitorsCount = await sanityClient.fetch(query);
-    //       this.visitorsStore.setVisitorsCount(visitorsCount);
-    //       return;
-    //     }
-
-    //     const data: { country_name: string; city: string } =
-    //       await this.getVisitorLocation();
-
-    //     await sanityClient.create({
-    //       _type: "visitor",
-    //       country_name: data.country_name,
-    //       city: data.city,
-    //     });
-
-    //     const visitorsCount = await sanityClient.fetch(query);
-
-    //     this.visitorsStore.setVisitorsCount(visitorsCount);
-    //     localStorage.setItem("isVisited", "true");
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
+    // motions() {
+    //   return useMotions();
     // },
+
+    async visitorHandler() {
+      this.visitorsStore.setLoading(true);
+      try {
+        const isVisited = localStorage.getItem("isVisited");
+        const query = `count(*[_type == "visitor"])`;
+
+        if (isVisited) {
+          const visitorsCount = await sanityClient.fetch(query);
+          this.visitorsStore.setVisitorsCount(visitorsCount);
+          return;
+        }
+
+        const data: { country_name: string; city: string } =
+          await this.getVisitorLocation();
+
+        await sanityClient.create({
+          _type: "visitor",
+          country_name: data.country_name,
+          city: data.city,
+        });
+
+        const visitorsCount = await sanityClient.fetch(query);
+
+        this.visitorsStore.setVisitorsCount(visitorsCount);
+        localStorage.setItem("isVisited", "true");
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
     async getVisitorLocation() {
       const response = await fetch(
@@ -111,22 +109,24 @@ export default defineComponent({
       }
     });
 
-    Promise.all([minDisplayTime, loadComplete]).then(() => {
-      this.preloader = false;
-      this.visitorsStore.setLoading(false);
-    });
+    Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
+      () => {
+        this.preloader = false;
+        this.visitorsStore.setLoading(false);
+      }
+    );
 
-    // emitter.on("shutdown", () => {
-    //   this.shutdown = true;
-    // });
-    // emitter.on("restart", () => {
-    //   this.shutdown = false;
-    // });
+    emitter.on("shutdown", () => {
+      this.shutdown = true;
+    });
+    emitter.on("restart", () => {
+      this.shutdown = false;
+    });
   },
 
   beforeUnmount() {
-    // emitter.off("shutdown");
-    // emitter.off("restart");
+    emitter.off("shutdown");
+    emitter.off("restart");
   },
 });
-</script> -->
+</script>
