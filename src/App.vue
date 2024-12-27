@@ -1,5 +1,5 @@
 <template>
-  <transition
+  <!-- <transition
     :css="false"
     @leave="(el, done) => motions().preloader.leave(done)"
   >
@@ -10,11 +10,13 @@
       :visibleOnce="{ opacity: 1, translateX: '-50%', left: '50%' }"
       :leave="{ opacity: 0, translateX: '-50%', left: '50%' }"
     />
-  </transition>
+  </transition> -->
 
-  <router-view v-if="!preloader && !shutdown" />
+  <!-- <router-view v-if="!preloader && !shutdown" /> -->
 
-  <Shutdown v-if="shutdown && !preloader" />
+  <router-view />
+
+  <!-- <Shutdown v-if="shutdown && !preloader" /> -->
 </template>
 
 <script lang="ts">
