@@ -36,13 +36,13 @@ export default defineComponent({
     Shutdown,
   },
 
-  setup() {
-    const visitorsStore = useVisitorsStore();
+  // setup() {
+  //   const visitorsStore = useVisitorsStore();
 
-    return {
-      visitorsStore,
-    };
-  },
+  //   return {
+  //     visitorsStore,
+  //   };
+  // },
 
   data() {
     return {
@@ -109,12 +109,12 @@ export default defineComponent({
       }
     });
 
-    Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
-      () => {
-        this.preloader = false;
-        this.visitorsStore.setLoading(false);
-      }
-    );
+    // Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
+    //   () => {
+    //     this.preloader = false;
+    //     this.visitorsStore.setLoading(false);
+    //   }
+    // );
 
     emitter.on("shutdown", () => {
       this.shutdown = true;
