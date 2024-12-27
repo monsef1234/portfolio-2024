@@ -25,7 +25,7 @@ import { useMotions } from "@vueuse/motion";
 import Preloader from "@/components/preloader/Index.vue";
 import Shutdown from "@/components/shutdown/Index.vue";
 import { useVisitorsStore } from "./stores/visitors";
-import { emitter } from "./main";
+// import { emitter } from "./main";
 import { sanityClient } from "./sanity";
 
 export default defineComponent({
@@ -116,17 +116,17 @@ export default defineComponent({
       }
     );
 
-    emitter.on("shutdown", () => {
-      this.shutdown = true;
-    });
-    emitter.on("restart", () => {
-      this.shutdown = false;
-    });
+    // emitter.on("shutdown", () => {
+    //   this.shutdown = true;
+    // });
+    // emitter.on("restart", () => {
+    //   this.shutdown = false;
+    // });
   },
 
   beforeUnmount() {
-    emitter.off("shutdown");
-    emitter.off("restart");
+    // emitter.off("shutdown");
+    // emitter.off("restart");
   },
 });
 </script>
