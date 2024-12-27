@@ -59,6 +59,8 @@ import { defineComponent, PropType, ref } from "vue";
 
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiWindowClose, mdiWindowMinimize } from "@mdi/js";
+import { saveAs } from "file-saver";
+
 import { App } from "@/types/app";
 import { outputLine } from "@/types/output-line";
 
@@ -263,11 +265,7 @@ export default defineComponent({
     downloadResume() {
       const filePath = "/src/assets/files/resume.pdf";
 
-      const link = document.createElement("a");
-      link.href = filePath;
-      link.download = "Bouras Moncef Sofiane - Web Developer - CV.pdf";
-      link.click();
-      link.remove();
+      saveAs(filePath, "Bouras Moncef Sofiane - Web Developer - CV.pdf");
     },
 
     handleNavigateUsingArrowKeys(e: KeyboardEvent) {
