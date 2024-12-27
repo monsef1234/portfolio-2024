@@ -261,11 +261,11 @@ export default defineComponent({
     },
 
     downloadResume() {
-      const filePath = "/src/assets/files/sample.pdf";
+      const filePath = "/src/assets/files/resume.pdf";
 
       const link = document.createElement("a");
       link.href = filePath;
-      link.download = "simple.pdf";
+      link.download = "Bouras Moncef Sofiane - Web Developer - CV.pdf";
       link.click();
       link.remove();
     },
