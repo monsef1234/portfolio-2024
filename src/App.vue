@@ -101,13 +101,13 @@ export default defineComponent({
 
   mounted() {
     const minDisplayTime = new Promise((resolve) => setTimeout(resolve, 3500));
-    const loadComplete = new Promise((resolve: any) => {
-      if (document.readyState === "complete") {
-        resolve();
-      } else {
-        window.addEventListener("load", resolve);
-      }
-    });
+    // const loadComplete = new Promise((resolve: any) => {
+    //   if (document.readyState === "complete") {
+    //     resolve();
+    //   } else {
+    //     window.addEventListener("load", resolve);
+    //   }
+    // });
 
     // Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
     //   () => {
