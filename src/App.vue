@@ -12,7 +12,7 @@
     />
   </transition> -->
 
-  <router-view v-if="!preloader && !shutdown" />
+  <router-view />
 
   <Shutdown v-if="shutdown && !preloader" />
 </template>
