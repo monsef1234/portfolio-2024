@@ -187,7 +187,8 @@ export default defineComponent({
 
     welcomeMessage() {
       return `<div class="flex gap-2">
-          <pre id="tiresult" style="font-size: 9px; background-color: #000000; font-weight: bold; padding: 4px 5px; --fs: 9px;"><b style="color:#DAD9DA">0</b><b style="color:#DADADA">0</b><b style="color:#DBDADB">1</b><b style="color:#DBDBDC">00</b><b style="color:#DDDDDE">1</b><b style="color:#E3E3E4">0</b><b style="color:#E5E5E6">1</b><b style="color:#D9D8D9">1</b><b style="color:#C1BFBF">0</b><b style="color:#C0BFBF">1</b><b style="color:#D9D8D8">0</b><b style="color:#E5E4E5">11</b><b style="color:#DDDDDE">0</b><b style="color:#DCDCDD">1</b><b style="color:#DCDBDD">1</b><b style="color:#DBDBDC">0</b><b style="color:#DBDADC">0</b><b style="color:#DADADB">1</b>
+     <pre id="tiresult" style="font-size: 9px; background-color: #000000; font-weight: bold; padding: 4px 5px; --fs: 9px;">
+  <b style="color:#DAD9DA">0</b><b style="color:#DADADA">0</b><b style="color:#DBDADB">1</b><b style="color:#DBDBDC">00</b><b style="color:#DDDDDE">1</b><b style="color:#E3E3E4">0</b><b style="color:#E5E5E6">1</b><b style="color:#D9D8D9">1</b><b style="color:#C1BFBF">0</b><b style="color:#C0BFBF">1</b><b style="color:#D9D8D8">0</b><b style="color:#E5E4E5">11</b><b style="color:#DDDDDE">0</b><b style="color:#DCDCDD">1</b><b style="color:#DCDBDD">1</b><b style="color:#DBDBDC">0</b><b style="color:#DBDADC">0</b><b style="color:#DADADB">1</b>
   <b style="color:#DBDADB">1</b><b style="color:#DCDBDC">1</b><b style="color:#DCDCDC">0</b><b style="color:#DDDCDD">1</b><b style="color:#DFDEDF">1</b><b style="color:#DFDEDE">0</b><b style="color:#B5B3B3">1</b><b style="color:#797675">0</b><b style="color:#4E4847">0</b><b style="color:#2D2928">1</b><b style="color:#2D2929">1</b><b style="color:#444141">1</b><b style="color:#646161">1</b><b style="color:#A9A8A9">0</b><b style="color:#DFDFDF">0</b><b style="color:#DFDFE0">1</b><b style="color:#DDDDDE">1</b><b style="color:#DCDCDD">00</b><b style="color:#DCDBDD">0</b>
   <b style="color:#DCDBDC">1</b><b style="color:#DDDCDC">1</b><b style="color:#DDDDDD">0</b><b style="color:#DFDEDF">1</b><b style="color:#E2E1E1">1</b><b style="color:#848080">1</b><b style="color:#272322">1</b><b style="color:#3B2B24">1</b><b style="color:#8D6452">1</b><b style="color:#A97C67">1</b><b style="color:#AD806B">0</b><b style="color:#A37866">1</b><b style="color:#7D5747">1</b><b style="color:#312724">1</b><b style="color:#6D6A6B">1</b><b style="color:#E1DFE0">1</b><b style="color:#E1E0E1">1</b><b style="color:#DFDEDF">0</b><b style="color:#DEDDDE">0</b><b style="color:#DCDCDD">0</b>
   <b style="color:#DDDCDC">1</b><b style="color:#DDDDDD">1</b><b style="color:#DFDEDE">1</b><b style="color:#DFDFDF">0</b><b style="color:#E4E3E4">0</b><b style="color:#BAB9BA">1</b><b style="color:#5D4C44">1</b><b style="color:#AA795D">1</b><b style="color:#AB7B62">0</b><b style="color:#C99073">1</b><b style="color:#F8B294">1</b><b style="color:#C28B72">0</b><b style="color:#B9856C">0</b><b style="color:#946C59">1</b><b style="color:#666160">1</b><b style="color:#E3E1E3">10</b><b style="color:#E1DFE0">1</b><b style="color:#DFDEDF">1</b><b style="color:#DDDCDD">1</b>
@@ -263,7 +264,7 @@ export default defineComponent({
     },
 
     downloadResume() {
-      const filePath = "/files/resume.pdf";
+      const filePath = "/resume.pdf";
 
       saveAs(filePath, "Bouras Moncef Sofiane - Web Developer - CV.pdf");
     },
