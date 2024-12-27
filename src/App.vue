@@ -25,7 +25,7 @@ import { defineComponent } from "vue";
 // import Preloader from "@/components/preloader/Index.vue";
 // import Shutdown from "@/components/shutdown/Index.vue";
 // import { useVisitorsStore } from "./stores/visitors";
-// import { emitter } from "./main";
+import { emitter } from "./main";
 // import { sanityClient } from "./sanity";
 
 export default defineComponent({
@@ -99,23 +99,25 @@ export default defineComponent({
     //     window.addEventListener("load", resolve);
     //   }
     // });
+
     // Promise.all([minDisplayTime, loadComplete, this.visitorHandler()]).then(
     //   () => {
     //     this.preloader = false;
     //     this.visitorsStore.setLoading(false);
     //   }
     // );
-    // emitter.on("shutdown", () => {
-    //   // this.shutdown = true;
-    // });
-    // emitter.on("restart", () => {
-    //   // this.shutdown = false;
-    // });
+
+    emitter.on("shutdown", () => {
+      // this.shutdown = true;
+    });
+    emitter.on("restart", () => {
+      // this.shutdown = false;
+    });
   },
 
-  // beforeUnmount() {
-  //   emitter.off("shutdown");
-  //   emitter.off("restart");
-  // },
+  beforeUnmount() {
+    emitter.off("shutdown");
+    emitter.off("restart");
+  },
 });
 </script>
