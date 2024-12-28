@@ -369,7 +369,14 @@ export default defineComponent({
     },
 
     checkPlaceholder() {
-      if (!this.checkDevices || this.outputLines.length > 1) return false;
+      if (
+        !this.checkDevices ||
+        (this.outputLines[0].prompt === "welcome" &&
+          this.outputLines.length > 1) ||
+        (this.outputLines[0].prompt !== "welcome" &&
+          this.outputLines.length == 1)
+      )
+        return false;
 
       return true;
     },

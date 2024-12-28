@@ -9,8 +9,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Portfolio",
-        short_name: "Portfolio",
+        name: "BMSfolio",
+        short_name: "BMS",
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
@@ -39,6 +39,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+
   build: {
     sourcemap: true,
   },

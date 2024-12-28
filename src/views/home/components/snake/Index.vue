@@ -77,26 +77,26 @@
     v-if="checkDevices"
   >
     <kbd
-      @click="handleTouch('up')"
+      @click.stop="handleTouch('up')"
       class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
     >
       <SvgIcon :path="mdiChevronUp" type="mdi" :size="30" />
     </kbd>
     <div class="flex gap-3 items-center">
       <kbd
-        @click="handleTouch('left')"
+        @click.stop="handleTouch('left')"
         class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
       >
         <SvgIcon :path="mdiChevronLeft" type="mdi" :size="30" />
       </kbd>
       <kbd
-        @click="handleTouch('down')"
+        @click.stop="handleTouch('down')"
         class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
       >
         <SvgIcon :path="mdiChevronDown" type="mdi" :size="30" />
       </kbd>
       <kbd
-        @click="handleTouch('right')"
+        @click.stop="handleTouch('right')"
         class="min-h-[30px] inline-flex justify-center items-center py-1 px-1.5 bg-gray-200 border border-transparent font-mono text-sm text-gray-800 rounded-md dark:bg-neutral-700 dark:text-neutral-200"
       >
         <SvgIcon :path="mdiChevronRight" type="mdi" :size="30" />
@@ -122,7 +122,6 @@ import { useMotions } from "@vueuse/motion";
 import { App } from "@/types/app";
 import eatEffect from "@/assets/sounds/eat-effect.wav";
 import gameOverEffect from "@/assets/sounds/game-over.wav";
-import { comma } from "postcss/lib/list";
 
 type command = "left" | "right" | "up" | "down";
 
