@@ -31,7 +31,7 @@ export default defineComponent({
 
       errorMessage: [
         "> Running diagnostics...",
-        "> Multiple errors found in kernel",
+        "> Multiple errors found in my system",
         "> Memory corruption at address 0xF8A92",
         "> File system integrity compromised",
         "> Core system files inaccessible",
