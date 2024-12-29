@@ -1,6 +1,6 @@
 <template>
   <div
-    class="font-lucida h-full py-10 flex flex-col gap-12 md:gap-20 absolute container break-words overflow-auto"
+    class="font-lucida h-full py-10 flex flex-col gap-12 md:gap-20 absolute container break-words overflow-auto bg-black"
     id="scroll-container"
   >
     <div class="flex text-center gap-32 text-lg leading-5 px-5">

@@ -6,18 +6,45 @@
     <Preloader
       v-if="preloader && !shutdown"
       v-motion="'preloader'"
-      :initial="{ opacity: 0, translateX: '-50%', left: '50%' }"
-      :visibleOnce="{ opacity: 1, translateX: '-50%', left: '50%' }"
-      :leave="{ opacity: 0, translateX: '-50%', left: '50%' }"
+      :initial="{
+        opacity: 0,
+        translateX: '-50%',
+        left: '50%',
+      }"
+      :visibleOnce="{
+        opacity: 1,
+        translateX: '-50%',
+        left: '50%',
+      }"
+      :leave="{
+        opacity: 0,
+        translateX: '-50%',
+        left: '50%',
+      }"
     />
   </transition>
 
-  <div class="h-[100dvh] flex flex-col" v-if="!shutdown && !preloader">
-    <div class="flex-1 bg-[#1b2021]">
-      <Desktop />
+  <transition :css="false" @leave="(el, done) => motions().home.leave(done)">
+    <div
+      v-motion="'home'"
+      :initial="{
+        opacity: 0,
+      }"
+      :visibleOnce="{
+        opacity: 1,
+      }"
+      :leave="{
+        opacity: 0,
+      }"
+      class="h-[100dvh] flex flex-col"
+      v-if="!shutdown && !preloader"
+    >
+      <div class="flex-1 bg-[#1b2021]">
+        <Desktop />
+      </div>
+      <Taskbar />
     </div>
-    <Taskbar />
-  </div>
+  </transition>
 
   <Shutdown v-if="shutdown && !preloader" />
 </template>
@@ -55,7 +82,7 @@ export default defineComponent({
 
   data() {
     return {
-      preloader: false as boolean,
+      preloader: true as boolean,
       shutdown: false as boolean,
     };
   },
