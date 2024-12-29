@@ -122,6 +122,7 @@ export default defineComponent({
       if (!response.ok) {
         throw new Error("Failed to fetch location data");
       }
+
       return response.json();
     },
   },
@@ -148,6 +149,11 @@ export default defineComponent({
     });
     emitter.on("restart", () => {
       this.shutdown = false;
+      this.preloader = true;
+
+      setTimeout(() => {
+        this.preloader = false;
+      }, 3000);
     });
   },
 
