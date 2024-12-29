@@ -24,42 +24,45 @@
   </div>
 
   <div class="h-[calc(100%-2.5rem)] grid grid-cols-3 gap-2 p-2">
-    <div v-if="!start" class="col-span-3 place-content-center text-center">
+    <div
+      v-if="!start && !winner && !draw"
+      class="col-span-3 place-content-center text-center"
+    >
       <p class="mt-2 text-xl">Choose a mode to start the game.</p>
 
       <div class="flex flex-col gap-3 mt-3 text-lg">
         <button
-          @click.stop="
+          @click="
             () => {
               start = true;
               mode = 'easy';
             }
           "
-          class="btn btn-primary block mx-auto underline"
+          class="block mx-auto underline"
         >
           Easy
         </button>
 
         <button
-          @click.stop="
+          @click="
             () => {
               start = true;
               mode = 'medium';
             }
           "
-          class="btn btn-primary block mx-auto underline"
+          class="block mx-auto underline"
         >
           Medium
         </button>
 
         <button
-          @click.stop="
+          @click="
             () => {
               start = true;
               mode = 'hard';
             }
           "
-          class="btn btn-primary block mx-auto underline"
+          class="block mx-auto underline"
         >
           Hard
         </button>
@@ -67,7 +70,7 @@
     </div>
 
     <div
-      v-if="start"
+      v-if="start && !winner && !draw"
       v-for="(cell, i) in cells"
       :key="i"
       @click.stop="handleCellClick(i)"
@@ -84,6 +87,51 @@
         {{ cell }}</span
       >
     </div>
+
+    <div
+      v-if="start && winner === 'X' && !draw"
+      class="col-span-3 place-content-center text-center"
+    >
+      <p class="mb-2 text-3xl">You win.</p>
+
+      <button @click="restartWithSameMode" class="mb-2 block mx-auto underline">
+        Restart
+      </button>
+
+      <button @click="restart" class="block mx-auto underline">
+        Change Level
+      </button>
+    </div>
+
+    <div
+      v-if="start && winner === 'O' && !draw"
+      class="col-span-3 place-content-center text-center"
+    >
+      <p class="mb-2 text-3xl">You lose.</p>
+
+      <button @click="restartWithSameMode" class="mb-2 block mx-auto underline">
+        Restart
+      </button>
+
+      <button @click="restart" class="block mx-auto underline">
+        Change Level
+      </button>
+    </div>
+
+    <div
+      v-if="start && draw"
+      class="col-span-3 place-content-center text-center"
+    >
+      <p class="mb-2 text-3xl">Draw</p>
+
+      <button @click="restartWithSameMode" class="mb-2 block mx-auto underline">
+        Restart
+      </button>
+
+      <button @click="restart" class="block mx-auto underline">
+        Change Level
+      </button>
+    </div>
   </div>
 </template>
 
@@ -95,8 +143,11 @@ import { mdiWindowClose, mdiWindowMinimize } from "@mdi/js";
 
 import { App } from "@/types/app";
 import drawEffect from "@/assets/sounds/draw-effect.wav";
+import winEffect from "@/assets/sounds/win-effect.wav";
+import gameOverEffect from "@/assets/sounds/game-over.wav";
 
 type mode = "easy" | "medium" | "hard";
+type cell = "X" | "O" | "";
 
 export default defineComponent({
   name: "TicTacToe",
@@ -123,11 +174,11 @@ export default defineComponent({
     return {
       start: false as boolean,
       computerTurn: false as boolean,
-      winner: "" as string,
+      winner: "" as cell,
       draw: false as boolean,
       mode: "medium" as mode,
 
-      cells: Array(9).fill("") as string[],
+      cells: Array(9).fill("") as cell[],
       winningCombinations: [
         [0, 1, 2],
         [3, 4, 5],
@@ -146,7 +197,6 @@ export default defineComponent({
       if (this.cells[index] !== "" || this.winner || this.computerTurn) return;
 
       this.cells[index] = "X";
-
       new Audio(drawEffect).play();
 
       this.checkWinner();
@@ -164,16 +214,19 @@ export default defineComponent({
 
         if (
           this.cells[a] === this.cells[b] &&
-          this.cells[a] === this.cells[c]
+          this.cells[b] === this.cells[c] &&
+          this.cells[a] !== ""
         ) {
           this.winner = this.cells[a];
+          this.winner === "X" && new Audio(winEffect).play();
+          this.winner === "O" && new Audio(gameOverEffect).play();
           return;
         }
+      }
 
-        if (!this.cells.includes("")) {
-          this.draw = true;
-          return;
-        }
+      if (this.cells.every((cell) => cell !== "")) {
+        this.draw = true;
+        return;
       }
     },
 
@@ -192,8 +245,8 @@ export default defineComponent({
         const [a, b, c] = this.winningCombinations[i];
 
         if (
-          this.cells[a] === "X" &&
-          this.cells[b] === "X" &&
+          this.cells[a] === "O" &&
+          this.cells[b] === "O" &&
           this.cells[c] === ""
         ) {
           this.cells[c] = "O";
@@ -202,8 +255,8 @@ export default defineComponent({
           this.computerTurn = false;
           return true;
         } else if (
-          this.cells[a] === "X" &&
-          this.cells[c] === "X" &&
+          this.cells[a] === "O" &&
+          this.cells[c] === "O" &&
           this.cells[b] === ""
         ) {
           this.cells[b] = "O";
@@ -212,8 +265,8 @@ export default defineComponent({
           this.computerTurn = false;
           return true;
         } else if (
-          this.cells[b] === "X" &&
-          this.cells[c] === "X" &&
+          this.cells[b] === "O" &&
+          this.cells[c] === "O" &&
           this.cells[a] === ""
         ) {
           this.cells[a] = "O";
@@ -287,6 +340,23 @@ export default defineComponent({
       this.checkWinner();
 
       this.computerTurn = false;
+    },
+
+    restartWithSameMode() {
+      this.cells = Array(9).fill("");
+      this.winner = "";
+      this.draw = false;
+      this.computerTurn = false;
+      this.start = true;
+    },
+
+    restart() {
+      this.cells = Array(9).fill("");
+      this.winner = "";
+      this.draw = false;
+      this.computerTurn = false;
+      this.start = false;
+      this.mode = "medium";
     },
   },
 });

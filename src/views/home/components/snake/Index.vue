@@ -52,7 +52,7 @@
           :visibleOnce="{ opacity: 1, x: '-50%', y: '-50%' }"
           :leave="{ opacity: 0, x: '-50%', y: '-50%' }"
           v-if="gameOver"
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 grid place-content-center -translate-y-1/2 w-full h-full backdrop-blur-sm bg-[var(--color-2)]"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 grid place-content-center -translate-y-1/2 w-full h-full bg-[var(--color-1)]"
         >
           <h1 class="text-[var(--color-3)] text-2xl font-bold">Game over</h1>
           <button
