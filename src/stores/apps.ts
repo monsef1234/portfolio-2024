@@ -5,7 +5,7 @@ import { App } from "@/types/app";
 import terminalIcon from "@/assets/images/terminal.png";
 import shutdownIcon from "@/assets/images/shutdown.png";
 import snakeIcon from "@/assets/images/snake.png";
-import ticTacToeIcon from "@/assets/images/tic-tac-toe.png";
+import tictactoeIcon from "@/assets/images/tic-tac-toe.png";
 
 export const useAppsStore = defineStore("apps", {
   state: () => ({
@@ -22,7 +22,7 @@ export const useAppsStore = defineStore("apps", {
       },
       {
         name: "Tic Tac Toe",
-        icon: ticTacToeIcon,
+        icon: tictactoeIcon,
         isOpen: false,
       },
       {
