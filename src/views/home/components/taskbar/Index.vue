@@ -49,7 +49,7 @@
 
       <div class="w-[0.1rem] h-5 bg-[var(--color-3)] mx-1"></div>
       <span class="font-bold md:text-sm text-xs">{{
-        format(realTime, "hh:mm aa")
+        format(realTime, "HH:mm")
       }}</span>
     </div>
   </div>
@@ -205,10 +205,11 @@ export default defineComponent({
   width: 20px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(farthest-side, var(--color-3) 94%, #0000) top/8px
-      8px no-repeat,
+  background:
+    radial-gradient(farthest-side, var(--color-3) 94%, #0000) top/8px 8px
+      no-repeat,
     conic-gradient(#0000 30%, var(--color-3));
-  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: l13 1s infinite linear;
 }
 @keyframes l13 {
