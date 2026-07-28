@@ -69,7 +69,7 @@ import confetti from "canvas-confetti";
 
 import { emitter } from "@/main";
 import { useSequencesStore } from "@/stores/sequences";
-import { sanityClient } from "@/sanity";
+import { supabase } from "@/supabase";
 
 export default defineComponent({
   name: "Sequence5",
@@ -123,10 +123,11 @@ export default defineComponent({
       try {
         if (!this.name.trim()) return;
 
-        await sanityClient.create({
-          _type: "winner",
-          name: this.name,
-        });
+        const { error } = await supabase
+          .from("winner")
+          .insert([{ name: this.name }]);
+          
+        if (error) throw error;
 
         this.name = "";
         this.form = false;
@@ -141,22 +142,24 @@ export default defineComponent({
 
     async getWinners() {
       const start = this.page * this.pageSize;
-      const end = start + this.pageSize;
+      const end = start + this.pageSize - 1;
 
       try {
-        const winners = await sanityClient.fetch(
-          `*[_type == "winner"] | order(_createdAt asc) [${start}...${end}]`,
-          {
-            start,
-            end,
-          }
-        );
+        const { data: winners, error } = await supabase
+          .from("winner")
+          .select("*")
+          .order("created_at", { ascending: true })
+          .range(start, end);
+          
+        if (error) throw error;
 
-        if (winners.length < this.pageSize) {
+        if (winners && winners.length < this.pageSize) {
           this.loadingHide = true;
         }
 
-        this.warriors = [...this.warriors, ...winners];
+        if (winners) {
+          this.warriors = [...this.warriors, ...winners];
+        }
       } catch (error) {
         console.log(error);
       }

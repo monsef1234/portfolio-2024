@@ -1,9 +1,10 @@
 <template>
   <div
-    class="font-lucida h-full py-10 flex flex-col gap-12 md:gap-20 absolute container break-words overflow-auto bg-black"
+    class="font-lucida h-[100dvh] w-full absolute inset-0 break-words overflow-auto bg-black"
     id="scroll-container"
   >
-    <div class="flex text-center gap-32 text-lg leading-5 px-5">
+    <div class="container mx-auto py-10 flex flex-col gap-12 md:gap-20 min-h-full">
+      <div class="flex text-center gap-32 text-lg leading-5 px-5">
       <p class="font-bold">Moncef,<br />Sofiane,<br />Bouras</p>
       <p>Released on: {{ format(new Date("2024-12-16"), "dd/MM/yyyy") }}</p>
     </div>
@@ -38,6 +39,7 @@
         <kbd class="font-bold">ESC</kbd> to skip memory test
       </p>
       <p>{{ format(new Date(), "dd/MM/yyyy") }}</p>
+    </div>
     </div>
   </div>
 </template>
@@ -89,7 +91,7 @@ export default defineComponent({
 
     autoScroll() {
       const container = document.querySelector(
-        "#scroll-container"
+        "#scroll-container",
       ) as HTMLElement;
 
       if (!container) return;

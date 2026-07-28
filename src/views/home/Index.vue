@@ -36,7 +36,7 @@
       :leave="{
         opacity: 0,
       }"
-      class="h-[100dvh] flex flex-col"
+      class="h-[100dvh] w-full flex flex-col overflow-hidden"
       v-if="!shutdown && !preloader"
     >
       <div class="flex-1 bg-[#1b2021]">
@@ -60,7 +60,7 @@ import Taskbar from "./components/taskbar/Index.vue";
 import Desktop from "./components/desktop/Index.vue";
 import { useVisitorsStore } from "@/stores/visitors";
 import { emitter } from "@/main";
-import { sanityClient } from "@/sanity";
+import { supabase } from "@/supabase";
 
 export default defineComponent({
   name: "Home",
@@ -95,35 +95,46 @@ export default defineComponent({
       this.visitorsStore.setLoading(true);
       try {
         const isVisited = localStorage.getItem("isVisited");
-        const query = `count(*[_type == "visitor"])`;
+
+        const fetchCount = async () => {
+          const { count, error } = await supabase
+            .from("visitor")
+            .select("*", { count: "exact", head: true });
+          if (error) throw error;
+          this.visitorsStore.setVisitorsCount(count || 0);
+        };
+
         if (isVisited) {
-          const visitorsCount = await sanityClient.fetch(query);
-          this.visitorsStore.setVisitorsCount(visitorsCount);
+          await fetchCount();
           return;
         }
+
         const data: { country_name: string; city: string } =
           await this.getVisitorLocation();
-        await sanityClient.create({
-          _type: "visitor",
-          country_name: data.country_name,
-          city: data.city,
-        });
-        const visitorsCount = await sanityClient.fetch(query);
-        this.visitorsStore.setVisitorsCount(visitorsCount);
+
+        const { error: insertError } = await supabase
+          .from("visitor")
+          .insert([{ country_name: data.country_name, city: data.city }]);
+
+        if (insertError) throw insertError;
+
+        await fetchCount();
         localStorage.setItem("isVisited", "true");
       } catch (error) {
         console.log(error);
       }
     },
     async getVisitorLocation() {
-      const response = await fetch(
-        `https://api.ipapi.com/check?access_key=${import.meta.env.VITE_KEY}`
-      );
+      const response = await fetch("https://ipwho.is/");
       if (!response.ok) {
         throw new Error("Failed to fetch location data");
       }
 
-      return response.json();
+      const data = await response.json();
+      return {
+        country_name: data.country,
+        city: data.city,
+      };
     },
   },
 
@@ -141,12 +152,13 @@ export default defineComponent({
       () => {
         this.preloader = false;
         this.visitorsStore.setLoading(false);
-      }
+      },
     );
 
     emitter.on("shutdown", () => {
       this.shutdown = true;
     });
+
     emitter.on("restart", () => {
       this.shutdown = false;
       this.preloader = true;

@@ -19,7 +19,7 @@
   "dependencies": {
     "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/js": "^7.4.47",
-    "@sanity/client": "^6.24.1",
+    "@supabase/supabase-js": "^2.109.0",
     "@types/node": "^22.10.2",
     "@vueuse/motion": "^2.2.6",
     "canvas-confetti": "^1.9.3",
@@ -31,7 +31,6 @@
     "tiny-emitter": "^2.1.0",
     "typewriter-effect": "^2.21.0",
     "vue": "^3.5.13",
-    "vue-draggable-resizable": "^3.0.0",
     "vue-router": "^4.5.0",
     "vue-simple-context-menu": "^4.1.0"
   },

@@ -19,77 +19,62 @@
     </button>
 
     <div v-for="app in openedApps" :key="app.name">
-      <vue-draggable-resizable
+      <DraggableWindow
         v-motion
-        :initial="{
-          opacity: 0,
-        }"
-        :enter="{
-          opacity: 1,
-        }"
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
         v-if="app.name == 'Terminal'"
         :key="app.name"
-        class="bg-[var(--color-1)] rounded-md w-[100%] md:w-[80%] h-[80%] absolute vue-draggable"
-        :style="{ zIndex: `${app.zIndex} !important` }"
+        class="bg-[var(--color-1)] rounded-md w-[100%] md:w-[80%] h-[80%] shadow-2xl"
+        :z-index="app.zIndex"
         v-show="!app.isMinimized"
-        :w="null"
-        :h="null"
-        :resizable="false"
-        @click="zIndexHandler(app)"
+        :initial-x="windowWidth > 768 ? windowWidth * 0.1 : 0"
+        :initial-y="windowHeight * 0.1"
+        @pointerdown="zIndexHandler(app)"
       >
         <Terminal
           :app="app"
           @close-app="closeApp"
           @minimize-app="minimizeApp"
         />
-      </vue-draggable-resizable>
+      </DraggableWindow>
 
-      <vue-draggable-resizable
+      <DraggableWindow
         v-motion
-        :initial="{
-          opacity: 0,
-        }"
-        :enter="{
-          opacity: 1,
-        }"
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
         v-if="app.name == 'Snake'"
         :key="app.name"
-        class="bg-[var(--color-1)] rounded-md max-w-lg w-full h-[65%] absolute vue-draggable"
-        :style="{ zIndex: `${app.zIndex} !important` }"
+        class="bg-[var(--color-1)] rounded-md max-w-lg w-full h-[65%] shadow-2xl"
+        :z-index="app.zIndex"
         v-show="!app.isMinimized"
-        :w="null"
-        :h="null"
-        :resizable="false"
-        :draggable="checkDevices ? false : true"
-        @click="zIndexHandler(app)"
+        :initial-x="windowWidth > 512 ? (windowWidth - 512) / 2 : 0"
+        :initial-y="windowHeight * 0.175"
+        :disabled="checkDevices ? true : false"
+        @pointerdown="zIndexHandler(app)"
       >
         <Snake :app="app" @close-app="closeApp" @minimize-app="minimizeApp" />
-      </vue-draggable-resizable>
+      </DraggableWindow>
 
-      <vue-draggable-resizable
+      <DraggableWindow
         v-motion
-        :initial="{
-          opacity: 0,
-        }"
-        :enter="{
-          opacity: 1,
-        }"
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
         v-if="app.name == 'Tic Tac Toe'"
         :key="app.name"
-        class="bg-[var(--color-1)] rounded-md max-w-lg w-full h-[65%] absolute vue-draggable"
-        :style="{ zIndex: `${app.zIndex} !important` }"
+        class="bg-[var(--color-1)] rounded-md max-w-lg w-full h-[65%] shadow-2xl"
+        :z-index="app.zIndex"
         v-show="!app.isMinimized"
-        :w="null"
-        :h="null"
-        :resizable="false"
-        @click="zIndexHandler(app)"
+        :initial-x="windowWidth > 512 ? (windowWidth - 512) / 2 : 0"
+        :initial-y="windowHeight * 0.175"
+        @pointerdown="zIndexHandler(app)"
       >
         <TicTacToe
           :app="app"
           @close-app="closeApp"
           @minimize-app="minimizeApp"
         />
-      </vue-draggable-resizable>
+      </DraggableWindow>
     </div>
 
     <div
@@ -131,6 +116,7 @@ import Terminal from "../terminal/Index.vue";
 import Snake from "../snake/Index.vue";
 import { openedApp } from "@/types/opened-app";
 import TicTacToe from "../tictactoe/Index.vue";
+import DraggableWindow from "@/components/DraggableWindow.vue";
 
 export default defineComponent({
   name: "Desktop",
@@ -150,10 +136,13 @@ export default defineComponent({
     Snake,
     Terminal,
     TicTacToe,
+    DraggableWindow,
   },
 
   data() {
     return {
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
       startTimestamp: null as number | null,
 
       openedApps: [] as openedApp[],
@@ -161,6 +150,11 @@ export default defineComponent({
   },
 
   methods: {
+    updateWindowSize() {
+      this.windowWidth = window.innerWidth;
+      this.windowHeight = window.innerHeight;
+    },
+
     appHandler(app: App) {
       if (app.name == "Shutdown") {
         emitter.emit("shutdown");
@@ -182,7 +176,7 @@ export default defineComponent({
 
     zIndexHandler(app: openedApp) {
       this.openedApps = this.openedApps.map((a) =>
-        a.name == app.name ? { ...a, zIndex: 1 } : { ...a, zIndex: 0 }
+        a.name == app.name ? { ...a, zIndex: 1 } : { ...a, zIndex: 0 },
       );
     },
 
@@ -220,7 +214,7 @@ export default defineComponent({
 
         const angle = Math.atan2(
           event.clientY - pupilCenterY,
-          event.clientX - pupilCenterX
+          event.clientX - pupilCenterX,
         );
 
         const distance = 5;
@@ -235,14 +229,15 @@ export default defineComponent({
 
   computed: {
     checkDevices() {
-      return window.matchMedia("(max-width: 768px)").matches;
+      return this.windowWidth <= 768;
     },
   },
 
   mounted() {
+    window.addEventListener("resize", this.updateWindowSize);
     emitter.on("toggle-app", (app: App) => {
       this.openedApps = this.openedApps.map((a) =>
-        a.name == app.name ? { ...a, isMinimized: !a.isMinimized } : a
+        a.name == app.name ? { ...a, isMinimized: !a.isMinimized } : a,
       );
     });
     emitter.on("close-app-right-click", (name: string) => {
@@ -253,6 +248,7 @@ export default defineComponent({
   },
 
   beforeUnmount() {
+    window.removeEventListener("resize", this.updateWindowSize);
     emitter.off("toggle-app");
 
     window.removeEventListener("mousemove", this.handleMouseMove);

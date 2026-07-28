@@ -237,14 +237,18 @@ export default defineComponent({
     },
 
     projectsMessage() {
-      return `<div class="flex flex-col gap-2">
+      return `<div class="flex flex-col gap-4">
         <div>
-          - <a class="text-[var(--color-5)] underline hover:text-[var(--color-6)] uppercase" href="https://github.com/monsef1234/map-talk-chat" target="_blank">Map Talk Chat</a>
-          <p>A real-time location-based chat application that allows users to communicate with others on an interactive map interface. Users can see each other's locations, start chats, engage in conversations, and make video calls based on their geographical proximity.</p>
+          - <a class="text-[var(--color-5)] underline hover:text-[var(--color-6)] uppercase font-bold" href="https://pharmaciedz-garde.com/" target="_blank">Pharmacies On-Call (Pharmacies DZ Garde)</a>
+          <p class="mt-1">A dedicated platform helping users seamlessly locate on-call pharmacies. The service is highly active and currently serves over 3,000 users.</p>
+          <p class="mt-1 italic opacity-80">> Built with: Vue 3, TypeScript, PrimeVue, Tailwind CSS, and Pinia.</p>
         </div>
         <div>
-          - <a class="text-[var(--color-5)] underline hover:text-[var(--color-6)] uppercase" href="https://github.com/monsef1234/ai-assistant" target="_blank">AI Assistant</a>
-          <p>A Vue.js-based chat interface that integrates with Azure OpenAI for text and speech interactions, providing an interactive AI assistant experience.</p>
+          - <span class="text-[var(--color-5)] uppercase font-bold">Spotter Map</span> 
+          (<a class="underline hover:text-[var(--color-6)]" href="https://play.google.com/store/apps/details?id=com.originova.spotter.map" target="_blank">Android</a> / 
+          <a class="underline hover:text-[var(--color-6)]" href="https://apps.apple.com/us/app/spotter-map/id6741210227" target="_blank">iOS</a>)
+          <p class="mt-1">A cross-platform mobile application available on the Play Store and App Store. I was responsible for developing the mobile application and contributed significant modifications to the backend infrastructure and API.</p>
+          <p class="mt-1 italic opacity-80">> Built with: Ionic, Vue 3, TypeScript, and Capacitor (Mobile) & Laravel / PHP (Backend API).</p>
         </div>
         </div>`;
     },

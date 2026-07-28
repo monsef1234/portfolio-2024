@@ -8,12 +8,10 @@ import App from "./App.vue";
 import { MotionPlugin } from "@vueuse/motion";
 import { TinyEmitter } from "tiny-emitter";
 import VueSimpleContextMenu from "vue-simple-context-menu";
-import VueDraggableResizable from "vue-draggable-resizable";
 import vClickOutside from "click-outside-vue3";
 
 // Styles
 import "vue-simple-context-menu/dist/vue-simple-context-menu.css";
-import "vue-draggable-resizable/style.css";
 import "./assets/styles/style.css";
 
 // Event emitter instance
@@ -25,7 +23,6 @@ const app = createApp(App);
 
 // Global components
 app.component("vue-simple-context-menu", VueSimpleContextMenu);
-app.component("vue-draggable-resizable", VueDraggableResizable);
 
 // Plugin registration
 app.use(router).use(MotionPlugin).use(vClickOutside).use(pinia);
